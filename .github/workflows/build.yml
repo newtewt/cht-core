@@ -27,13 +27,16 @@ jobs:
       run: ./scripts/travis/couch-start
     - name: xsltprox install
       run: sudo apt-get install xsltproc
-    - name: build and test
+    - name: npm CI
+      run: npm ci
+    - name: Grunt Install
+      run: npm install -g grunt-cli
+    - name: Horti Install
+      run: npm install -g horticulturalist
+    - name: Configure Couch
+      run: ./scripts/travis/couch-config
+    - name: Grunt CI-Compile
       run: |
-        mkdir tests/logs
-        npm ci
-        npm install -g grunt-cli
-        npm install -g horticulturalist
-        ./scripts/travis/couch-config
         echo "HORTI_BUILDS_SERVER=${UPLOAD_URL}/${BUILDS_SERVER}"
         echo "--install=medic:medic:test-${TRAVIS_BUILD_NUMBER}"
         echo "COUCH_URL=${COUCH_URL}"
