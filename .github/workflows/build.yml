@@ -7,6 +7,9 @@ env:
   COUCH_NODE_NAME: nonode@nohost
   BUILDS_SERVER: _couch/builds_testing
   STAGING_SERVER: _couch/builds
+  TRAVIS_BUILD_NUMBER: $GITHUB_RUN_ID
+  TRAVIS_BRANCH: $GITHUB_REF#refs/heads/
+
 
 jobs:
   build:
