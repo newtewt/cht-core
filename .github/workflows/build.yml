@@ -24,8 +24,8 @@ jobs:
     - name: Set TAG_NAME var
       run: |
         if [[ -z "$UPLOAD_URL" ]]; then
-          echo "::set-env name=UPLOAD_URL::https://staging.dev.medicmobile.org"
-          echo "::set-env name=BUILDS_SERVER::_couch/builds_external"
+          echo "{UPLOAD_URL}={https://staging.dev.medicmobile.org}" >> $GITHUB_ENV
+          echo "{BUILDS_SERVER}={_couch/builds_external}" >> $GITHUB_ENV
         fi
         env
     - uses: actions/checkout@v2
