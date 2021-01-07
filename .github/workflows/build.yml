@@ -27,6 +27,8 @@ jobs:
       run: ./scripts/travis/couch-start
     - name: xsltprox install
       run: sudo apt-get install xsltproc
+    - name: Create logs directory
+      run: mkdir tests/logs
     - name: npm CI
       run: npm ci
     - name: Grunt Install
