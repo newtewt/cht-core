@@ -73,7 +73,9 @@ jobs:
 
     steps:
     - name: Set Travis Vars
-      run: echo "TRAVIS_BUILD_NUMBER=$GITHUB_RUN_ID" >> $GITHUB_ENV
+      run: |
+        echo "TRAVIS_BUILD_NUMBER=$GITHUB_RUN_ID" >> $GITHUB_ENV
+        echo "TEST_SUITE=integration" >> $GITHUB_ENV
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -106,7 +108,7 @@ jobs:
         COUCH_URL=$COUCH_URL HORTI_BUILDS_SERVER=$UPLOAD_URL/$BUILDS_SERVER horti --local --install=medic:medic:test-$TRAVIS_BUILD_NUMBER > tests/logs/horti.log &
     - name: Test it!
       run: node --stack_size=10000 `which grunt` ci-e2e
-    - name: Archive code coverage results
+    - name: Archive test results folder
       uses: actions/upload-artifact@v2
       with:
         name: Results Artifact 
