@@ -29,6 +29,7 @@ jobs:
         fi
     - name: Get branch name
       uses: nelonoel/branch-name@v1.0.1
+      run: |
         echo "TRAVIS_BUILD_NUMBER=$GITHUB_RUN_ID" >> $GITHUB_ENV
         echo "TRAVIS_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
     - uses: actions/checkout@v2
