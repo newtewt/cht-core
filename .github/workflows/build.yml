@@ -83,7 +83,7 @@ jobs:
     - name: NPM 
       run: npm ci
     - name: Run Tests
-      run: node --stack_size=10000 `which grunt` grunt:test-config-default
+      run: node --stack_size=10000 `which grunt` exec:test-config-default
 
   standard-config-tests:
     name: Standard Config Testst
@@ -104,7 +104,7 @@ jobs:
     - name: NPM 
       run: npm ci
     - name: Run Tests
-      run: node --stack_size=10000 `which grunt` grunt:test-config-standard
+      run: node --stack_size=10000 `which grunt` exec:test-config-standard
 
   test-e2e:
     needs: build
