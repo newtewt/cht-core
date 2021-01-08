@@ -108,9 +108,17 @@ jobs:
         COUCH_URL=$COUCH_URL HORTI_BUILDS_SERVER=$UPLOAD_URL/$BUILDS_SERVER horti --local --install=medic:medic:test-$TRAVIS_BUILD_NUMBER > tests/logs/horti.log &
     - name: Test it!
       run: node --stack_size=10000 `which grunt` ci-e2e
+    - name: Dump Couch logs
+      run: docker logs couch > tests/logs/couch.log 2>&1
     - name: Archive test results folder
       uses: actions/upload-artifact@v2
       with:
-        name: Results Artifact 
+        name: Results Artifact ${{ matrix.node-version }}
         path: tests/results
       if: ${{ always() }}
+    - name: Archive test logs folder
+      uses: actions/upload-artifact@v2
+      with:
+        name: Results Logs ${{ matrix.node-version }}
+        path: tests/logs
+      if: ${{ always() }
