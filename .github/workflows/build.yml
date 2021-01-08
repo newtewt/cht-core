@@ -113,3 +113,4 @@ jobs:
       with:
         name: Results Artifact 
         path: tests/results
+      if: ${{ always() }}
