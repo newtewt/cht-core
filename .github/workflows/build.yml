@@ -125,6 +125,13 @@ jobs:
       run: |
         echo "TRAVIS_BUILD_NUMBER=$GITHUB_RUN_ID" >> $GITHUB_ENV
         echo "TEST_SUITE=integration" >> $GITHUB_ENV
+    - name: Set UPLOARD_URL var
+      run: |
+        if [[ -z "$UPLOAD_URL" ]]; then
+          echo "UPLOAD_URL=https://staging.dev.medicmobile.org" >> $GITHUB_ENV
+          echo "BUILDS_SERVER=_couch/builds_external" >> $GITHUB_ENV
+          echo "STAGING_SERVER=_couch/builds_external" >> $GITHUB_ENV
+        fi
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
