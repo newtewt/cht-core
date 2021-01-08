@@ -14,10 +14,6 @@ jobs:
   build:
     name: Compile the app 
     runs-on: ubuntu-18.04
-  
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps: 
     # - name: Login to Docker Hub
@@ -39,10 +35,10 @@ jobs:
         echo "TRAVIS_BUILD_NUMBER=$GITHUB_RUN_ID" >> $GITHUB_ENV
         echo "TRAVIS_BRANCH=$BRANCH_NAME" >> $GITHUB_ENV
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
     - name: Couch Start
       run: ./scripts/travis/couch-start
     - name: Create logs directory
@@ -67,17 +63,13 @@ jobs:
   default-config-tests:
     name: Default Config Testst
     runs-on: ubuntu-18.04
-  
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps: 
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
     - name: Grunt Install
       run: npm install -g grunt-cli
     - name: NPM 
@@ -88,17 +80,13 @@ jobs:
   standard-config-tests:
     name: Standard Config Testst
     runs-on: ubuntu-18.04
-  
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps: 
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
     - name: Grunt Install
       run: npm install -g grunt-cli
     - name: NPM 
