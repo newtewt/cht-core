@@ -7,6 +7,7 @@ env:
   COUCH_NODE_NAME: nonode@nohost
   BUILDS_SERVER: _couch/builds_testing
   STAGING_SERVER: _couch/builds
+  UPLOAD_URL: ${{ secrets.UPLOAD_URL }}
 
 
 jobs:
