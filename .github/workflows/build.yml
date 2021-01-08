@@ -55,7 +55,7 @@ jobs:
       run: ./scripts/travis/couch-config
     - name: Grunt CI-Compile
       run: |
-        node --stack_size=10000 `which grunt` ci-compile
+        node --stack_size=10000 `which grunt` ci-compile-github
     - name: Publish
       run: |
         node --stack_size=10000 `which grunt` publish-for-testing
