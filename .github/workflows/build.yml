@@ -80,6 +80,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Grunt Install
       run: npm install -g grunt-cli
+    - name: NPM 
+      run: npm ci
     - name: Run Tests
       run: node --stack_size=10000 `which grunt` grunt:test-config-default
 
@@ -99,6 +101,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Grunt Install
       run: npm install -g grunt-cli
+    - name: NPM 
+      run: npm ci
     - name: Run Tests
       run: node --stack_size=10000 `which grunt` grunt:test-config-standard
 
