@@ -8,8 +8,9 @@ jobs:
     steps:
     - id: set-matrix
       run: |
-        
-        echo "::set-output name=matrix::$(cat)"
+        echo $(pwd)
+        JSON=$(cat ./.github/workflows/build_matrix.json)
+        echo "::set-output name=matrix::${JSON//'%'/'%25'}"
   job2:
     needs: job1
     runs-on: ubuntu-latest
