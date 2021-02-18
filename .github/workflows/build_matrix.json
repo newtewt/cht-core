@@ -1,0 +1,16 @@
+{
+  "include": [
+    {
+      "node": "8",
+      "suite": "login"
+    },
+    {
+      "node": "10",
+      "suite": "login"
+    },
+    {
+      "node": "12",
+      "suite": "login"
+    }
+  ]
+}
