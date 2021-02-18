@@ -9,6 +9,7 @@ jobs:
     - id: set-matrix
       run: |
         echo $(pwd)
+        echo ls
         JSON=$(cat ./.github/workflows/build_matrix.json)
         echo "::set-output name=matrix::${JSON//'%'/'%25'}"
   job2:
