@@ -6,10 +6,11 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
+    - uses: actions/checkout@v2
     - id: set-matrix
       run: |
         echo $(pwd)
-        echo $(ls)
+        ls
         JSON=$(cat ./.github/workflows/build_matrix.json)
         echo "::set-output name=matrix::${JSON//'%'/'%25'}"
   job2:
