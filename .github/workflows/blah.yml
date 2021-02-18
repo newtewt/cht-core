@@ -12,7 +12,7 @@ jobs:
         echo $(pwd)
         ls
         JSON=$(cat ./.github/workflows/build_matrix.json)
-        echo "::set-output name=matrix::${JSON//'%'/'%25'}"
+        echo "::set-output name=matrix::${$JSON//'%'/'%25'}"
   job2:
     needs: job1
     runs-on: ubuntu-latest
