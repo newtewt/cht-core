@@ -715,6 +715,11 @@ module.exports = function(grunt) {
           }
         }
       },
+      'e2e-tests': {
+        options: {
+          configFile: 'tests/conf.js',
+        }
+      },
       'e2e-mobile-tests': {
         options: {
           configFile: TRAVIS_TAG || TRAVIS_BRANCH?'tests/conf-travis.js':'tests/conf.js',
@@ -1049,7 +1054,7 @@ module.exports = function(grunt) {
   grunt.registerTask('ci-e2e', 'Run e2e tests for CI', [
     'start-webdriver',
     'exec:e2e-servers',
-    'protractor:e2e-web-tests',
+    'protractor:e2e-tests',
     //'protractor:e2e-mobile-tests',
   ]);
 

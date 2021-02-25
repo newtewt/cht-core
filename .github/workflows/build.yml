@@ -66,9 +66,36 @@ jobs:
         node ./publish.js
       if: ${{ github.event_name != 'pull_request' }}
   
+
+  matrix_builder:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+    - uses: actions/checkout@v2
+    - id: set-matrix
+      run: |
+        npm ci
+        echo $(pwd)
+        ls
+        mkdir tests/logs
+        node scripts/e2e/split_tests.js
+        content=`cat ./test_matrix.json`
+        # the following lines are only required for multi line json
+        content="${content//'%'/'%25'}"
+        content="${content//$'\n'/'%0A'}"
+        content="${content//$'\r'/'%0D'}"
+        # end of optional handling for multi line json
+        echo "::set-output name=matrix::$content"
+    - name: Archive Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: Test Matrix
+        path: ./test_matrix.json
+
   default-config-tests:
     needs: build
-    name: Default Config Testst
+    name: Default Config Test
     runs-on: ubuntu-18.04
 
     steps:
@@ -103,13 +130,12 @@ jobs:
       run: node --stack_size=10000 `which grunt` exec:test-config-standard
 
   test-e2e:
-    needs: build
-    name: e2e Tests for Node version ${{ matrix.node-version }}
+    needs: [build, matrix_builder]
+    name: e2e Tests for Node version ${{ matrix.node }}
     runs-on: ubuntu-18.04
 
     strategy:
-      matrix:
-        node-version: [8.x, 10.x, 12.x]
+      matrix: ${{fromJSON(needs.matrix_builder.outputs.matrix)}}
 
     steps:
     - name: Get Docker Hub username
@@ -133,10 +159,10 @@ jobs:
           echo "STAGING_SERVER=_couch/builds_external" >> $GITHUB_ENV
         fi
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js ${{ matrix.node }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: ${{ matrix.node }}
     - name: Couch Start
       run: ./scripts/travis/couch-start
     - name: xsltprox install
@@ -163,7 +189,7 @@ jobs:
         echo "COUCH_URL=$COUCH_URL HORTI_BUILDS_SERVER=$MARKET_URL/$BUILDS_SERVER"
         COUCH_URL=$COUCH_URL HORTI_BUILDS_SERVER=$MARKET_URL/$BUILDS_SERVER horti --local --install=medic:medic:test-$TRAVIS_BUILD_NUMBER > tests/logs/horti.log &
     - name: Test it!
-      run: node --stack_size=10000 `which grunt` ci-e2e
+      run: node --stack_size=10000 `which grunt` ci-e2e --specs=${{ matrix.specs }}
     - name: Dump Couch logs
       run: docker logs couch > tests/logs/couch.log 2>&1
       if: ${{ always() }}
