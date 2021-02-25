@@ -35,4 +35,3 @@ jobs:
           name: Results Artifact ${{ matrix.node-version }} with control flow
           path: |
             ./test_matrix.json
-        if: ${{ failure() }}
