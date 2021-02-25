@@ -21,6 +21,11 @@ jobs:
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
         echo "::set-output name=matrix::$content"
+    - name: Archive Results
+      uses: actions/upload-artifact@v2
+      with:
+        name: Results Artifact ${{ matrix.node-version }} with control flow
+        path: ./test_matrix.json
   test_runner:
     name: Tests for Node ${{ matrix.node }} Specs ${{ matrix.specs }}
     needs: matrix_builder
@@ -29,9 +34,3 @@ jobs:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
       - run: echo ${{ matrix.node }} && echo ${{ matrix.specs }}
-      - name: Archive Results
-        uses: actions/upload-artifact@v2
-        with:
-          name: Results Artifact ${{ matrix.node-version }} with control flow
-          path: |
-            ./test_matrix.json
