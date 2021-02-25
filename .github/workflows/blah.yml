@@ -11,7 +11,9 @@ jobs:
       run: |
         echo $(pwd)
         ls
-        content=`cat ./.github/workflows/build_matrix.json`
+        mkdir tests/logs
+        node scripts/e2e/split_tests.js
+        content=`cat ./test_matrix.json`
         # the following lines are only required for multi line json
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
