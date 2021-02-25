@@ -1,7 +1,7 @@
 name: build
 on: push
 jobs:
-  job1:
+  matrix_builder:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -21,10 +21,11 @@ jobs:
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
         echo "::set-output name=matrix::$content"
-  job2:
-    needs: job1
+  test_runner:
+    name: Tests for Node ${{ matrix.node }} Specs ${{ matrix.specs }}
+    needs: matrix_builder
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
-    - run: echo ${{ matrix.node }} && echo ${{ matrix.suite }}
+    - run: echo ${{ matrix.node }} && echo ${{ matrix.specs }}
