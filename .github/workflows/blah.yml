@@ -28,4 +28,11 @@ jobs:
     strategy:
       matrix: ${{fromJSON(needs.job1.outputs.matrix)}}
     steps:
-    - run: echo ${{ matrix.node }} && echo ${{ matrix.specs }}
+      - run: echo ${{ matrix.node }} && echo ${{ matrix.specs }}
+      - name: Archive Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Results Artifact ${{ matrix.node-version }} with control flow
+          path: |
+            ./test_matrix.json
+        if: ${{ failure() }}
