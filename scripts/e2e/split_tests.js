@@ -1,5 +1,5 @@
 const glob = require('glob');
-const suite = require('../../tests/conf').config.suites.e2e;
+const suite = require('../../tests/conf').config.suites.web[0];
 const fs = require('fs');
 console.log(suite);
 

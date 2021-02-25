@@ -74,6 +74,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: set-matrix
+    - name : Generate test_matrix.json
       run: |
         npm ci
         echo $(pwd)
