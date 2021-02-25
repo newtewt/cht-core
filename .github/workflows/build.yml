@@ -72,10 +72,8 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - name: Checkem out
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     - id: set-matrix
-    - name : Generate test_matrix.json
       run: |
         npm ci
         echo $(pwd)
