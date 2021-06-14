@@ -297,8 +297,6 @@ const baseConfig = {
         60 * 1000);
 
       generation.on('exit', function (exitCode) {
-
-      generation.on('exit', function (exitCode) {
         clearTimeout(generationTimeout);
 
         if (exitCode !== 0) {
