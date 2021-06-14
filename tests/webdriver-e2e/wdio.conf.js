@@ -297,9 +297,12 @@ const baseConfig = {
         5000);
 
       generation.on('exit', function (exitCode) {
+
+      generation.on('exit', function (exitCode) {
         clearTimeout(generationTimeout);
 
         if (exitCode !== 0) {
+          console.warn(`Exit Code was: ${exitCode}`);
           return reject(reportError);
         }
 
